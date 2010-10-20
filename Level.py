@@ -30,7 +30,7 @@ class Level:
 		for enemy in self.enemies:
 			self.entities.add(enemy)	
 
-	def is_finished():
+	def is_finished(self):
 		return len(self.entities) == 1
 		
 	def update(self):
