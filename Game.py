@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-# Phoenix Objects
+# Meadowlark Objects
 import Level
-import PhoenixConfig as config
+import MeadowlarkConfig as config
 
 class Game:
 	def __init__(self, background, levels):

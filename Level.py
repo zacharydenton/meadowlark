@@ -2,7 +2,7 @@
 import Ship
 import Enemy
 import Boss
-import PhoenixConfig as config
+import MeadowlarkConfig as config
 
 # PyGame Constants
 import pygame

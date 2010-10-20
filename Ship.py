@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import PhoenixConfig as config
+import MeadowlarkConfig as config
 import Weapon
 import Spritesheet
 
