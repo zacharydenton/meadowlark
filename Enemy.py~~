@@ -1,0 +1,67 @@
+# -*- coding: utf-8 -*-
+import PhoenixConfig as config
+import Weapon
+
+# PyGame Constants
+import pygame
+from pygame.locals import *
+from pygame.color import THECOLORS
+
+import math
+import random
+
+class Enemy:
+	def __init__(self, screen, bgcolor, position):
+		self.screen		= screen
+		self.x				= position[0]
+		self.y				= position[1]
+		self.bgcolor	= bgcolor
+		self.color		= THECOLORS["green"]
+		self.size			= [80,80]
+		self.rect			= pygame.rect.Rect(self.x, self.y, self.size[0], self.size[1])
+
+		self.health		= config.enemy_base_health
+		self.speed		= config.enemy_base_speed
+		self.weapon		= Weapon.Weapon(self)
+		self.skill		=	config.enemy_base_skill
+		self.counter	= 0
+		self.alive		= True
+		self.direction= [0,1]
+
+	def move(self, direction):
+		self.x += (self.speed * direction[0])
+		self.y += (self.speed * direction[1])
+		self.weapon.move(self.speed, direction)
+
+	def move_auto(self):
+		x = math.cos(math.radians(self.counter))
+		y = math.sin(math.radians(self.counter))
+		self.move((x,y))
+
+	def fire(self):
+		self.weapon.fire()
+
+	def damage(self, amount):
+		self.health -= amount
+
+	def die(self):
+		self.alive = False
+
+	def update(self, entities):
+		if self.health < 0:
+			self.die()
+		if random.random() <= (self.skill/100.0):
+			self.fire()
+		self.move_auto()
+		self.counter += 1
+		if self.counter > 360:
+			self.counter = 0
+		self.draw()
+		self.weapon.update(entities)
+
+	def draw(self):
+		# erase previous
+		pygame.draw.rect(self.screen, self.bgcolor, self.rect)
+		# draw a new rect
+		self.rect = pygame.rect.Rect(self.x,self.y, self.size[0], self.size[1])
+		pygame.draw.rect(self.screen, self.color, self.rect)
