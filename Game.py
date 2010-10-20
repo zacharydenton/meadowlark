@@ -3,6 +3,9 @@
 import Level
 import MeadowlarkConfig as config
 
+# PyGame Constants
+from pygame.locals import *
+
 class Game:
 	def __init__(self, background, levels):
 		self.background = background
@@ -10,18 +13,19 @@ class Game:
 		self.level = self.get_level(1)
 		
 	def get_levels(self):
-		#TODO parse xml file describing levels
+		#TODO parse file describing levels
 		pass
 
 	def get_level(self, level):
+		#TODO return self.levels[level+1]
 		level = Level.Level(self.background)
 		return level
 
 	def update(self):
-		if level.is_finished():
-			level = self.next_level()
+		if self.level.is_finished():
+			self.level = self.next_level()
 		else:
-			level.update()
+			self.level.update()
 		pass
 
 	def check_keys(self, events):

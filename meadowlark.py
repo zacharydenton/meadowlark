@@ -3,9 +3,8 @@ import time
 import string
 import random
 
-# Meadowlark Objects
-import Level
-import MeadowlarkConfig as config
+# Phoenix Objects
+import Game
 
 # PyGame Constants
 import pygame
@@ -20,39 +19,29 @@ def main():
 	BGCOLOR = THECOLORS["black"]
 	pygame.init()
 	screen = pygame.display.set_mode(WINSIZE)
-	pygame.display.set_caption('Meadowlark')
+	pygame.display.set_caption('Phoenix')
 	clock = pygame.time.Clock()
 
 	# fill background
 	background = pygame.Surface(screen.get_size())
 	background.fill(BGCOLOR)
 
-	# initialize level
-	level = Level.Level(background)
+	# initialize game
+	levels = "assets/levels.xml"
+	game = Game.Game(background, levels)
 	
 	# The Main Event Loop
 	done = False
 	while not done:
 		clock.tick(60)
 		background.fill(BGCOLOR)
-		
-		if level.is_finished():
-			level = next_level()
-		else:
-			level.update()
+
+		game.update()
 		
 		# Event handling
 		events = pygame.event.get()
-		level.check_keys(events)
-		for e in events:
-			if (e.type == QUIT):
-				done = True
-				break
-			elif (e.type == KEYDOWN):
-				if (e.key == K_ESCAPE):
-					done = True
-					break
-					
+		done = game.check_keys(events)
+				
 		screen.blit(background, [0,0])
 		pygame.display.flip()
 	
